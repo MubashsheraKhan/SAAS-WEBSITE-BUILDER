@@ -1,0 +1,8 @@
+rules_version = '2';
+service firebase.storage {
+ match /b/{bucket}/o {
+  function isMember(businessId){return request.auth != null && firestore.exists(/databases/(default)/documents/businesses/$(businessId)/members/$(request.auth.uid));}
+  match /businesses/{businessId}/{allPaths=**}{allow read: if isMember(businessId); allow write: if isMember(businessId) && request.resource.size < 10 * 1024 * 1024 && request.resource.contentType.matches('image/(jpeg|png|webp|gif)');}
+  match /{allPaths=**}{allow read,write: if false;}
+ }
+}
