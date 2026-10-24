@@ -1,0 +1,1 @@
+export default { content: ["./*.html", "./dashboard/**/*.html", "./admin/**/*.html", "./js/**/*.js"], theme: { extend: { colors: { iris: { 50: "#f8f6ff", 100: "#efebff", 200: "#ddd4ff", 500: "#8a70c7", 700: "#654b9d" }, plum: { 700: "#56335f", 900: "#35213d" } }, boxShadow: { soft: "0 16px 45px rgba(65, 43, 90, 0.09)" } } }, plugins: [] };
