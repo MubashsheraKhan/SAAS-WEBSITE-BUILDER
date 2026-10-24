@@ -27,11 +27,16 @@ function statusLabel(status) {
 
 async function apiRequest(path, options = {}) {
   if (!currentUser) throw new Error("Please log in again.");
-  const token = await currentUser.getIdToken();
-  const response = await fetch(path, {
-    ...options,
-    headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}`, ...(options.headers || {}) }
-  });
+  const send = async (forceRefresh = false) => {
+    const token = await currentUser.getIdToken(forceRefresh);
+    return fetch(path, {
+      ...options,
+      headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}`, ...(options.headers || {}) }
+    });
+  };
+  let response = await send(false);
+  // Recover once from an expired/stale Firebase ID token without replaying indefinitely.
+  if (response.status === 401) response = await send(true);
   const result = await response.json().catch(() => ({}));
   if (!response.ok) throw new Error(result.error || "The request could not be completed.");
   return result;
