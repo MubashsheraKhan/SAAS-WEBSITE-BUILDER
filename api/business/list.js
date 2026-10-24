@@ -10,7 +10,6 @@ export default async function handler(req, res) {
     const snapshot = await getAdminApp().firestore()
       .collection("businesses")
       .where("ownerUid", "==", user.uid)
-      .orderBy("createdAt", "desc")
       .limit(50)
       .get();
     const businesses = snapshot.docs.map((doc) => {
