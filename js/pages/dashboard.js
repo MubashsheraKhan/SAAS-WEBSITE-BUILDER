@@ -50,7 +50,7 @@ function renderBusinesses(businesses) {
       <div class="flex items-start justify-between gap-3"><div class="flex h-11 w-11 items-center justify-center rounded-xl bg-iris-100 text-lg font-bold text-iris-700" aria-hidden="true">${escapeHtml((business.name || "B").charAt(0).toUpperCase())}</div><span class="rounded-full bg-iris-50 px-3 py-1 text-xs font-semibold text-iris-700">${escapeHtml(statusLabel(business.status))}</span></div>
       <h3 class="mt-4 text-lg font-bold text-plum-900">${escapeHtml(business.name)}</h3>
       <p class="mt-1 text-sm text-slate-500">${escapeHtml(businessTypeLabel(business.type))}</p>
-      <div class="mt-auto flex items-center justify-between gap-3 pt-5"><span class="truncate text-xs text-slate-400">ID: ${escapeHtml(business.id.slice(0, 8))}</span><span class="text-sm font-semibold text-slate-400">Editor · Phase 3</span></div>
+      <div class="mt-auto flex items-center justify-between gap-3 pt-5"><span class="truncate text-xs text-slate-400">ID: ${escapeHtml(business.id.slice(0, 8))}</span><a class="btn-primary !px-3 !py-2" href="/dashboard/website-builder.html?businessId=${escapeHtml(business.id)}">Open editor</a></div>
     </article>`).join("");
 }
 
