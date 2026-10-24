@@ -11,7 +11,7 @@
     "build:css": "tailwindcss -i ./css/input.css -o ./css/tailwind.css --minify",
     "build": "npm run build:css && vite build",
     "preview": "vite preview",
-    "check": "node --check js/config/firebase.js && node --check js/services/auth.js && node --check js/pages/auth-page.js && node --check js/pages/dashboard.js && node --check js/builder/sections.js && node --check js/builder/preview.js && node --check js/builder/editor.js && node --check js/storefront/renderer.js && node --check api/business/list.js && node --check api/business/create.js && node --check api/websites/config.js && node --check api/websites/publish.js && node --check api/websites/resolve.js && node --check api/health.js"
+    "check": "node --check js/config/firebase.js && node --check js/services/auth.js && node --check js/pages/auth-page.js && node --check js/pages/dashboard.js && node --check js/builder/sections.js && node --check js/builder/preview.js && node --check js/builder/editor.js && node --check js/storefront/renderer.js && node --check api/business/list.js && node --check api/business/create.js && node --check api/websites/config.js && node --check api/websites/publish.js && node --check api/websites/resolve.js && node --check api/health.js && node --check api/catalogue/items.js && node --check api/catalogue/public.js && node --check api/orders/index.js && node --check api/enquiries/index.js"
   },
   "dependencies": {
     "firebase": "^12.4.0",
