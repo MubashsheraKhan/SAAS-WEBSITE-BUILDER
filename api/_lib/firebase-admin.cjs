@@ -1,4 +1,4 @@
 const admin=require("firebase-admin");
 function getAdminApp(){if(admin.apps.length)return admin.app();const projectId=process.env.FIREBASE_PROJECT_ID,clientEmail=process.env.FIREBASE_CLIENT_EMAIL,privateKey=process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g,"\n");if(!projectId||!clientEmail||!privateKey)throw new Error("Firebase Admin environment variables are not configured.");return admin.initializeApp({credential:admin.credential.cert({projectId,clientEmail,privateKey}),projectId});}
 async function requireUser(req,res){const match=(req.headers.authorization||"").match(/^Bearer (.+)$/i);if(!match){res.status(401).json({error:"Authentication required."});return null;}try{return await getAdminApp().auth().verifyIdToken(match[1],true);}catch{res.status(401).json({error:"Invalid or expired session."});return null;}}
-module.exports={getAdminApp,requireUser};
+module.exports={getAdminApp,requireUser,FieldValue:admin.firestore.FieldValue};
