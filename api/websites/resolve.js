@@ -3,10 +3,14 @@ const { getAdminApp } = adminLib;
 export default async function handler(req, res) {
   res.setHeader("Cache-Control", "public, s-maxage=60, stale-while-revalidate=300");
   if (req.method !== "GET") { res.setHeader("Allow", "GET"); return res.status(405).json({ error: "Method not allowed." }); }
-  const slug = typeof req.query?.slug === "string" ? req.query.slug.toLowerCase().trim() : "";
-  if (!/^[a-z0-9-]{3,80}$/.test(slug)) return res.status(400).json({ error: "Provide a valid website address." });
+  const rawSlug = typeof req.query?.slug === "string" ? req.query.slug.trim() : "";
+  const slug = rawSlug.toLowerCase();
+  if (!/^[a-z0-9-]{3,80}$/i.test(rawSlug)) return res.status(400).json({ error: "Provide a valid website address." });
   try {
-    const db = getAdminApp().firestore(), found = await db.collection("businesses").where("slug", "==", slug).limit(1).get();
+    const db = getAdminApp().firestore();
+    let found = await db.collection("businesses").where("slug", "==", slug).limit(1).get();
+    // Backward compatibility: older workspace slugs used the case-sensitive Firestore ID suffix.
+    if (found.empty && rawSlug !== slug) found = await db.collection("businesses").where("slug", "==", rawSlug).limit(1).get();
     if (found.empty) return res.status(404).json({ error: "This website could not be found." });
     const businessDoc = found.docs[0], business = businessDoc.data();
     if (business.status !== "active" || !business.publishedVersion) return res.status(404).json({ error: "This website has not been published yet." });
