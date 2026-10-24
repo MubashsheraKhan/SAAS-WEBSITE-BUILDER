@@ -1,0 +1,5 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@layer base { html { color-scheme: light; } body { @apply bg-iris-50 text-slate-800 antialiased; } }
+@layer components { .field { @apply w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm transition focus:border-iris-500 focus:ring-4 focus:ring-iris-100; } .btn-primary { @apply inline-flex items-center justify-center rounded-xl bg-plum-900 px-5 py-3 text-sm font-semibold text-white transition hover:bg-plum-700 focus:outline-none focus:ring-4 focus:ring-iris-200 disabled:cursor-not-allowed disabled:opacity-60; } .btn-secondary { @apply inline-flex items-center justify-center rounded-xl border border-slate-200 bg-white px-5 py-3 text-sm font-semibold text-slate-700 transition hover:bg-slate-50; } }
